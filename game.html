@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess the Capital — Young Lee</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #fff;
+      color: #111;
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      border-bottom: 3px solid #111;
+      padding: 1.4rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      font-weight: bold;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #111;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #111;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    nav a:hover, nav a.active { border-bottom-color: #111; }
+
+    /* BANNER */
+    .banner {
+      background: #111;
+      color: #fff;
+      padding: 4rem 3rem;
+    }
+
+    .banner .label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .banner h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+    }
+
+    /* CONTENT */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4rem 2rem;
+      max-width: 680px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* PROGRESS */
+    .progress-bar-wrap {
+      width: 100%;
+      height: 4px;
+      background: #eee;
+      margin-bottom: 2.5rem;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: #C9A84C;
+      transition: width 0.4s;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 2.5rem;
+    }
+
+    .meta .score-val { color: #C9A84C; font-weight: bold; }
+
+    /* QUESTION */
+    .question-label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 0.8rem;
+      align-self: flex-start;
+    }
+
+    .country {
+      font-size: 2.4rem;
+      font-weight: bold;
+      margin-bottom: 2.5rem;
+      align-self: flex-start;
+    }
+
+    /* OPTIONS */
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+
+    .option {
+      border: 2px solid #111;
+      padding: 1rem 1.2rem;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: left;
+      background: #fff;
+      color: #111;
+      transition: background 0.15s, color 0.15s;
+      letter-spacing: 0.5px;
+    }
+
+    .option:hover:not(:disabled) { background: #111; color: #fff; }
+
+    .option.correct { background: #111; color: #C9A84C; border-color: #111; }
+    .option.wrong   { background: #eee; color: #999; border-color: #ddd; }
+    .option:disabled { cursor: default; }
+
+    /* FEEDBACK */
+    .feedback {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      min-height: 1.4rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .feedback.correct { color: #C9A84C; font-weight: bold; }
+    .feedback.wrong   { color: #888; }
+
+    /* NEXT BUTTON */
+    .btn {
+      background: #111;
+      color: #fff;
+      border: none;
+      padding: 0.9rem 2.5rem;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: none;
+    }
+
+    .btn:hover { background: #333; }
+    .btn.visible { display: inline-block; }
+
+    /* RESULT SCREEN */
+    #result {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+    }
+
+    #result.visible { display: flex; }
+
+    .result-label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 1rem;
+    }
+
+    .result-score {
+      font-size: 5rem;
+      font-weight: bold;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .result-score span { color: #C9A84C; }
+
+    .result-total {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 1rem;
+    }
+
+    .result-msg {
+      font-size: 1.1rem;
+      color: #444;
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+
+    #game { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #ddd;
+      padding: 1.5rem 3rem;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      color: #aaa;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Young Lee</a>
+    <ul>
+      <li><a href="about.html">About</a></li>
+      <li><a href="career.html">Career</a></li>
+      <li><a href="youtube.html">Youtube</a></li>
+      <li><a href="contact.html">Contact</a></li>
+
+      <li><a href="game.html" class="active">Game</a></li>
+    </ul>
+  </nav>
+
+  <div class="banner">
+    <div class="label">Enjoy Your Time</div>
+    <h1>Guess the Capital</h1>
+  </div>
+
+  <div class="content">
+
+    <!-- GAME -->
+    <div id="game">
+      <div class="progress-bar-wrap"><div class="progress-bar" id="progress"></div></div>
+      <div class="meta">
+        <span id="q-count">Question 1 of 20</span>
+        <span>Score: <span class="score-val" id="score-display">0</span></span>
+      </div>
+      <div class="question-label">What is the capital of...</div>
+      <div class="country" id="country"></div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <button class="btn" id="next-btn">Next Question →</button>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result">
+      <div class="result-label">Round Complete</div>
+      <div class="result-score"><span id="final-score">0</span></div>
+      <div class="result-total">out of 20 correct</div>
+      <div class="result-msg" id="result-msg"></div>
+      <button class="btn visible" id="play-again">Play Again</button>
+    </div>
+
+  </div>
+
+  <footer>&copy; 2026 Young Lee</footer>
+
+  <script>
+    const COUNTRIES = [
+      {country:"Afghanistan",capital:"Kabul"},
+      {country:"Albania",capital:"Tirana"},
+      {country:"Algeria",capital:"Algiers"},
+      {country:"Argentina",capital:"Buenos Aires"},
+      {country:"Australia",capital:"Canberra"},
+      {country:"Austria",capital:"Vienna"},
+      {country:"Bangladesh",capital:"Dhaka"},
+      {country:"Belgium",capital:"Brussels"},
+      {country:"Bolivia",capital:"Sucre"},
+      {country:"Brazil",capital:"Brasília"},
+      {country:"Cambodia",capital:"Phnom Penh"},
+      {country:"Canada",capital:"Ottawa"},
+      {country:"Chile",capital:"Santiago"},
+      {country:"China",capital:"Beijing"},
+      {country:"Colombia",capital:"Bogotá"},
+      {country:"Croatia",capital:"Zagreb"},
+      {country:"Cuba",capital:"Havana"},
+      {country:"Czech Republic",capital:"Prague"},
+      {country:"Denmark",capital:"Copenhagen"},
+      {country:"Ecuador",capital:"Quito"},
+      {country:"Egypt",capital:"Cairo"},
+      {country:"Ethiopia",capital:"Addis Ababa"},
+      {country:"Finland",capital:"Helsinki"},
+      {country:"France",capital:"Paris"},
+      {country:"Germany",capital:"Berlin"},
+      {country:"Ghana",capital:"Accra"},
+      {country:"Greece",capital:"Athens"},
+      {country:"Hungary",capital:"Budapest"},
+      {country:"India",capital:"New Delhi"},
+      {country:"Indonesia",capital:"Jakarta"},
+      {country:"Iran",capital:"Tehran"},
+      {country:"Iraq",capital:"Baghdad"},
+      {country:"Ireland",capital:"Dublin"},
+      {country:"Israel",capital:"Jerusalem"},
+      {country:"Italy",capital:"Rome"},
+      {country:"Japan",capital:"Tokyo"},
+      {country:"Jordan",capital:"Amman"},
+      {country:"Kenya",capital:"Nairobi"},
+      {country:"South Korea",capital:"Seoul"},
+      {country:"Kuwait",capital:"Kuwait City"},
+      {country:"Malaysia",capital:"Kuala Lumpur"},
+      {country:"Mexico",capital:"Mexico City"},
+      {country:"Morocco",capital:"Rabat"},
+      {country:"Myanmar",capital:"Naypyidaw"},
+      {country:"Netherlands",capital:"Amsterdam"},
+      {country:"New Zealand",capital:"Wellington"},
+      {country:"Nigeria",capital:"Abuja"},
+      {country:"Norway",capital:"Oslo"},
+      {country:"Pakistan",capital:"Islamabad"},
+      {country:"Peru",capital:"Lima"},
+      {country:"Philippines",capital:"Manila"},
+      {country:"Poland",capital:"Warsaw"},
+      {country:"Portugal",capital:"Lisbon"},
+      {country:"Romania",capital:"Bucharest"},
+      {country:"Russia",capital:"Moscow"},
+      {country:"Saudi Arabia",capital:"Riyadh"},
+      {country:"South Africa",capital:"Pretoria"},
+      {country:"Spain",capital:"Madrid"},
+      {country:"Sri Lanka",capital:"Sri Jayawardenepura Kotte"},
+      {country:"Sweden",capital:"Stockholm"},
+      {country:"Switzerland",capital:"Bern"},
+      {country:"Thailand",capital:"Bangkok"},
+      {country:"Turkey",capital:"Ankara"},
+      {country:"Ukraine",capital:"Kyiv"},
+      {country:"United Kingdom",capital:"London"},
+      {country:"United States",capital:"Washington D.C."},
+      {country:"Venezuela",capital:"Caracas"},
+      {country:"Vietnam",capital:"Hanoi"},
+      {country:"Zimbabwe",capital:"Harare"},
+      {country:"Uzbekistan",capital:"Tashkent"},
+      {country:"Tanzania",capital:"Dodoma"},
+      {country:"Sudan",capital:"Khartoum"},
+      {country:"Singapore",capital:"Singapore"},
+      {country:"Serbia",capital:"Belgrade"},
+      {country:"Qatar",capital:"Doha"},
+      {country:"Paraguay",capital:"Asunción"},
+      {country:"Panama",capital:"Panama City"},
+      {country:"Oman",capital:"Muscat"},
+      {country:"North Korea",capital:"Pyongyang"},
+      {country:"Nepal",capital:"Kathmandu"},
+      {country:"Mongolia",capital:"Ulaanbaatar"},
+      {country:"Libya",capital:"Tripoli"},
+      {country:"Kazakhstan",capital:"Astana"},
+      {country:"Jamaica",capital:"Kingston"},
+      {country:"Iceland",capital:"Reykjavik"},
+      {country:"Honduras",capital:"Tegucigalpa"},
+      {country:"Guatemala",capital:"Guatemala City"},
+      {country:"Finland",capital:"Helsinki"},
+      {country:"Estonia",capital:"Tallinn"},
+      {country:"Dominican Republic",capital:"Santo Domingo"},
+      {country:"Democratic Republic of the Congo",capital:"Kinshasa"},
+      {country:"Cyprus",capital:"Nicosia"},
+      {country:"Cameroon",capital:"Yaoundé"},
+      {country:"Bulgaria",capital:"Sofia"},
+      {country:"Belarus",capital:"Minsk"},
+      {country:"Azerbaijan",capital:"Baku"},
+      {country:"Armenia",capital:"Yerevan"},
+    ];
+
+    const TOTAL = 20;
+    let questions, qIndex, score, answered;
+
+    function shuffle(arr) {
+      return [...arr].sort(() => Math.random() - 0.5);
+    }
+
+    function getWrongOptions(correct) {
+      const pool = COUNTRIES.map(c => c.capital).filter(c => c !== correct);
+      return shuffle(pool).slice(0, 3);
+    }
+
+    function startGame() {
+      questions = shuffle(COUNTRIES).slice(0, TOTAL);
+      qIndex = 0;
+      score = 0;
+      answered = false;
+      document.getElementById('result').classList.remove('visible');
+      document.getElementById('game').style.display = 'flex';
+      showQuestion();
+    }
+
+    function showQuestion() {
+      answered = false;
+      const { country, capital } = questions[qIndex];
+      document.getElementById('country').textContent = country;
+      document.getElementById('q-count').textContent = `Question ${qIndex + 1} of ${TOTAL}`;
+      document.getElementById('score-display').textContent = score;
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('feedback').className = 'feedback';
+      document.getElementById('next-btn').classList.remove('visible');
+      document.getElementById('progress').style.width = `${(qIndex / TOTAL) * 100}%`;
+
+      const options = shuffle([capital, ...getWrongOptions(capital)]);
+      const container = document.getElementById('options');
+      container.innerHTML = '';
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => selectAnswer(btn, opt, capital));
+        container.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(btn, selected, correct) {
+      if (answered) return;
+      answered = true;
+
+      document.querySelectorAll('.option').forEach(b => {
+        b.disabled = true;
+        if (b.textContent === correct) b.classList.add('correct');
+        else if (b === btn) b.classList.add('wrong');
+      });
+
+      const fb = document.getElementById('feedback');
+      if (selected === correct) {
+        score++;
+        fb.textContent = '✓ Correct!';
+        fb.className = 'feedback correct';
+      } else {
+        fb.textContent = `✗ The capital is ${correct}.`;
+        fb.className = 'feedback wrong';
+      }
+
+      document.getElementById('score-display').textContent = score;
+
+      if (qIndex + 1 === TOTAL) {
+        document.getElementById('next-btn').textContent = 'See Results';
+      }
+      document.getElementById('next-btn').classList.add('visible');
+    }
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      qIndex++;
+      if (qIndex >= TOTAL) {
+        showResult();
+      } else {
+        showQuestion();
+      }
+    });
+
+    function showResult() {
+      document.getElementById('game').style.display = 'none';
+      document.getElementById('result').classList.add('visible');
+      document.getElementById('final-score').textContent = score;
+      document.getElementById('progress').style.width = '100%';
+
+      let msg;
+      if (score === 20)      msg = "Perfect score! You're a geography genius.";
+      else if (score >= 16)  msg = "Excellent! You really know your capitals.";
+      else if (score >= 12)  msg = "Good job! A solid performance.";
+      else if (score >= 8)   msg = "Not bad — keep exploring the world.";
+      else                   msg = "Keep studying — the world is worth knowing.";
+      document.getElementById('result-msg').textContent = msg;
+    }
+
+    document.getElementById('play-again').addEventListener('click', startGame);
+
+    startGame();
+  </script>
+
+</body>
+</html>

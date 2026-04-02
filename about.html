@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Young Lee</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #fff;
+      color: #111;
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* NAV */
+    nav {
+      border-bottom: 3px solid #111;
+      padding: 1.4rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      font-weight: bold;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #111;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.2rem;
+      justify-content: space-between;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #111;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    nav a:hover, nav a.active { border-bottom-color: #111; }
+
+    /* BANNER */
+    .banner {
+      background: #111;
+      color: #fff;
+      padding: 4rem 3rem;
+    }
+
+    .banner .label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .banner h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      line-height: 1.1;
+    }
+
+    /* CONTENT */
+    .content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+      flex: 1;
+    }
+
+    /* SECTION BLOCK */
+    .block {
+      border-top: 3px solid #111;
+      padding: 3rem 0;
+    }
+
+    .block:last-child {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .block-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .block-label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #999;
+      min-width: 90px;
+    }
+
+    .block h2 {
+      font-size: 1.6rem;
+      font-weight: bold;
+      font-family: 'Georgia', serif;
+    }
+
+    /* EDUCATION */
+    .edu-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid #e8e8e8;
+    }
+
+    .edu-item:first-child { border-top: none; }
+
+    .edu-year {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      color: #999;
+      padding-top: 0.2rem;
+    }
+
+    .edu-detail h3 {
+      font-size: 1.05rem;
+      font-weight: bold;
+      font-family: 'Segoe UI', sans-serif;
+      margin-bottom: 0.25rem;
+    }
+
+    .edu-detail .sub {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    /* CAREER */
+    .career-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid #e8e8e8;
+    }
+
+    .career-item:first-child { border-top: none; }
+
+    .career-year {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      color: #999;
+      padding-top: 0.2rem;
+    }
+
+    .career-detail h3 {
+      font-size: 1.05rem;
+      font-weight: bold;
+      font-family: 'Segoe UI', sans-serif;
+      margin-bottom: 0.25rem;
+    }
+
+    .career-detail .role {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #ddd;
+      padding: 1.5rem 3rem;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      color: #aaa;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Young Lee</a>
+    <ul>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="career.html">Career</a></li>
+      <li><a href="youtube.html">Youtube</a></li>
+      <li><a href="contact.html">Contact</a></li>
+
+      <li><a href="game.html">Game</a></li>
+    </ul>
+  </nav>
+
+  <div class="banner">
+    <div class="label">Who I Am</div>
+    <h1>About</h1>
+  </div>
+
+  <div class="content">
+
+    <div style="border-top: 3px solid #111; padding: 3rem 0;">
+      <div style="font-family:'Segoe UI',sans-serif; font-size:1.4rem; letter-spacing:3px; text-transform:uppercase; color:#111; font-weight:bold; margin-bottom:1.8rem;">About Young</div>
+      <div style="display:flex; align-items:flex-start; gap:3rem;">
+        <img src="picture of me.jpg" alt="Young Lee"
+          style="width:180px; height:180px; border-radius:50%; object-fit:cover; object-position:center top; flex-shrink:0;">
+        <div>
+          <p style="font-size:1.1rem; line-height:1.9; color:#333; margin-bottom:1.2rem;">
+            Welcome to my world! I'm Young, a senior at Babson College studying Accounting, with 2 out of 4 CPA exams already completed. I have a strong interest in Tax, Audit, and Advisory.
+          </p>
+          <p style="font-size:1.1rem; line-height:1.9; color:#333; margin-bottom:1.2rem;">
+            Beyond the numbers, I'm deeply passionate about geopolitics and the forces that shape our world. I'm building toward launching an informative geopolitics YouTube channel. The foundation is set, and the content is coming soon.
+          </p>
+          <p style="font-size:1.1rem; line-height:1.9; color:#333;">
+            When I'm not studying or thinking about global affairs, you'll find me out on a run or on the soccer field.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>&copy; 2026 Young Lee</footer>
+
+</body>
+</html>
