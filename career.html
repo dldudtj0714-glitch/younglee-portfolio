@@ -135,6 +135,41 @@
       color: #666;
     }
 
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+    .modal-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .pwc-link {
+      cursor: pointer;
+      border-bottom: 1px dashed #999;
+      display: inline;
+    }
+    .pwc-link:hover { border-bottom-color: #111; }
+
     /* FOOTER */
     footer {
       border-top: 1px solid #ddd;
@@ -208,13 +243,6 @@
 
   <div class="content">
 
-    <div style="padding: 2rem 0 1rem; border-bottom: 1px solid #e8e8e8; margin-bottom: 1rem; width: 100%;">
-      <a href="YoungSeoLeeResume.pdf" download
-        style="display:inline-block; background:#111; color:#fff; text-decoration:none; font-family:'Segoe UI',sans-serif; font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; padding:0.9rem 2rem; transition:background 0.2s;"
-        onmouseover="this.style.background='#333'" onmouseout="this.style.background='#111'">
-        ↓ &nbsp;Download Resume
-      </a>
-    </div>
 
     <!-- EDUCATION -->
     <div class="block">
@@ -235,21 +263,21 @@
         <div class="row-date">Jun 2026 – Aug 2026</div>
         <div class="row-detail">
           <h3>BDO USA</h3>
-          <div class="sub">Assurance Intern</div>
+          <div class="sub">Assurance Intern &middot; Boston, MA</div>
         </div>
       </div>
       <div class="row">
         <div class="row-date">Jan 2024 – Apr 2024</div>
         <div class="row-detail">
           <h3>WeGotThis.org</h3>
-          <div class="sub">Student Consultant</div>
+          <div class="sub">Student Consultant &middot; Wellesley Hills, MA</div>
         </div>
       </div>
       <div class="row">
         <div class="row-date">Dec 2023 – Mar 2024</div>
         <div class="row-detail">
           <h3>Springer Capital</h3>
-          <div class="sub">Finance Intern</div>
+          <div class="sub">Finance Intern &middot; Remote</div>
         </div>
       </div>
     </div>
@@ -260,7 +288,7 @@
       <div class="row">
         <div class="row-date">Sep 2023 – Oct 2023</div>
         <div class="row-detail">
-          <h3>PwC Challenge Case Competition</h3>
+          <h3 class="pwc-link" onclick="document.getElementById('pwcModal').classList.add('open')">PwC Challenge Case Competition</h3>
           <div class="sub">1st Place</div>
         </div>
       </div>
@@ -269,6 +297,10 @@
         <div class="row-detail">
           <h3>Babson Stock Pitch Competition</h3>
           <div class="sub">2nd Place</div>
+          <div style="margin-top:0.5rem; display:flex; gap:0.6rem; flex-wrap:wrap;">
+            <a href="Walmart Stock Pitch/Walmart CompCo.xlsx" download style="font-family:'Segoe UI',sans-serif; font-size:0.75rem; letter-spacing:1px; text-transform:uppercase; color:#111; border:1px solid #111; padding:0.3rem 0.7rem; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='#111';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='#111'">↓ Walmart CompCo</a>
+            <a href="Walmart Stock Pitch/Walmart DCF.xlsx" download style="font-family:'Segoe UI',sans-serif; font-size:0.75rem; letter-spacing:1px; text-transform:uppercase; color:#111; border:1px solid #111; padding:0.3rem 0.7rem; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='#111';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='#111'">↓ Walmart DCF</a>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -280,6 +312,12 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- PwC Winner Modal -->
+  <div class="modal-overlay" id="pwcModal" onclick="if(event.target===this)this.classList.remove('open')">
+    <button class="modal-close" onclick="document.getElementById('pwcModal').classList.remove('open')">&times;</button>
+    <img src="PwC Challenge Case Competition/Winner.png" alt="PwC Challenge Case Competition Winner">
   </div>
 
   <footer>&copy; 2026 Young Lee</footer>
