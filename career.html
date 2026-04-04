@@ -262,14 +262,14 @@
       <div class="row">
         <div class="row-date">Jun 2026 – Aug 2026</div>
         <div class="row-detail">
-          <h3>BDO USA</h3>
+          <h3 class="pwc-link" onclick="document.getElementById('bdoModal').classList.add('open')">BDO USA</h3>
           <div class="sub">Assurance Intern &middot; Boston, MA</div>
         </div>
       </div>
       <div class="row">
         <div class="row-date">Jan 2024 – Apr 2024</div>
         <div class="row-detail">
-          <h3>WeGotThis.org</h3>
+          <h3 class="pwc-link" onclick="document.getElementById('wegotthisModal').classList.add('open')">WeGotThis.org</h3>
           <div class="sub">Student Consultant &middot; Wellesley Hills, MA</div>
         </div>
       </div>
@@ -318,6 +318,18 @@
   <div class="modal-overlay" id="pwcModal" onclick="if(event.target===this)this.classList.remove('open')">
     <button class="modal-close" onclick="document.getElementById('pwcModal').classList.remove('open')">&times;</button>
     <img src="PwC Challenge Case Competition/Winner.png" alt="PwC Challenge Case Competition Winner">
+  </div>
+
+  <!-- BDO USA Modal -->
+  <div class="modal-overlay" id="bdoModal" onclick="if(event.target===this)this.classList.remove('open')">
+    <button class="modal-close" onclick="document.getElementById('bdoModal').classList.remove('open')">&times;</button>
+    <img src="BDO.jpg" alt="BDO USA">
+  </div>
+
+  <!-- WeGotThis Modal -->
+  <div class="modal-overlay" id="wegotthisModal" onclick="if(event.target===this)this.classList.remove('open')">
+    <button class="modal-close" onclick="document.getElementById('wegotthisModal').classList.remove('open')">&times;</button>
+    <img src="Wegotthis.png" alt="WeGotThis.org">
   </div>
 
   <footer>&copy; 2026 Young Lee</footer>
